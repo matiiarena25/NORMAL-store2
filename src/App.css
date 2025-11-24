@@ -1,0 +1,218 @@
+/* Existing styles */
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Dark Mode Overrides */
+body.dark {
+  background-color: #1a1a1a;
+  /* Fallback */
+  color: #ffffff;
+}
+
+/* Make main container transparent to see background */
+.dark-mode {
+  background: transparent !important;
+}
+
+/* Glassmorphism for Navbar */
+body.dark .navbar {
+  background-color: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glassmorphism for Footer */
+body.dark footer {
+  background-color: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glassmorphism for Cards */
+body.dark .card {
+  background-color: rgba(20, 20, 20, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Dropdowns */
+body.dark .dropdown-menu {
+  background-color: rgba(20, 20, 20, 0.95) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark .dropdown-item {
+  color: #e0e0e0;
+}
+
+body.dark .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* Ensure text is readable */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p,
+body.dark span,
+body.dark div {
+  color: inherit;
+}
+
+/* Specific Dark Mode Refinements */
+body.dark .text-normal-highlight {
+  color: #ff69b4 !important;
+  /* Hot Pink */
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+body.dark .section-title {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+}
+
+body.dark .btn-primary {
+  background-color: #0d6efd;
+  /* Keep primary color but ensure contrast */
+  border-color: #0d6efd;
+}
+
+body.dark .btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* Back button in Product Detail */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+}
+
+body.dark .back-button {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+/* Solid red for "Vaciar Carrito" in dark mode */
+body.dark .btn-outline-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+body.dark .btn-outline-danger:hover {
+  background-color: #bb2d3b;
+  border-color: #b02a37;
+}
+
+/* Pink "Finalizar Compra" button in dark mode */
+body.dark .btn-success {
+  background-color: #ff69b4;
+  border-color: #ff69b4;
+  color: white;
+}
+
+body.dark .btn-success:hover {
+  background-color: #ff1493;
+  /* Deep Pink */
+  border-color: #ff1493;
+}
+
+/* Dark Mode Notification Toast */
+body.dark .toast {
+  background-color: rgba(20, 20, 20, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .toast .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Dark Mode Checkout Modal */
+body.dark .modal-content {
+  background-color: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+body.dark .modal-header,
+body.dark .modal-footer {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .modal .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+body.dark .modal .text-success {
+  color: #00d26a !important;
+  /* Brighter green for dark mode */
+}
