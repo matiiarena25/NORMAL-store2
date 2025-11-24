@@ -71,6 +71,7 @@ const Admin = () => {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Ej: Auriculares Bluetooth"
                                 value={newProduct.name}
                                 onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                                 required
@@ -81,6 +82,7 @@ const Admin = () => {
                             <input
                                 type="number"
                                 className="form-control"
+                                placeholder="Ej: 15000"
                                 value={newProduct.price}
                                 onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
                                 required
@@ -91,6 +93,7 @@ const Admin = () => {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Ej: Audio"
                                 value={newProduct.category}
                                 onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
                                 required
@@ -100,6 +103,7 @@ const Admin = () => {
                             <label className="form-label">Descripción Corta</label>
                             <textarea
                                 className="form-control"
+                                placeholder="Ej: Auriculares inalámbricos con cancelación de ruido..."
                                 value={newProduct.description}
                                 onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
                                 required
