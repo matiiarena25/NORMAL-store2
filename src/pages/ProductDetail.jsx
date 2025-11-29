@@ -28,7 +28,7 @@ const ProductDetail = () => {
             <div className="card">
                 <div className="row">
                     <div className="col-md-6">
-                        <img src={product.image} className="img-fluid rounded" alt={product.name} style={{ maxHeight: '400px', objectFit: 'contain', width: '100%' }} />
+                        <img src={product.imageUrl} className="img-fluid rounded" alt={product.name} style={{ maxHeight: '400px', objectFit: 'contain', width: '100%' }} />
                     </div>
                     <div className="col-md-6">
                         <h2>{product.name}</h2>
