@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../context/AuthContext/useAuth';
+import { useAuth } from '../context/AuthContext/useAuth';
 import useCart from '../context/CartContext/useCart';
 import useTheme from '../context/ThemeContext/useTheme';
 import { FaShoppingCart, FaSun, FaMoon, FaUser } from 'react-icons/fa';

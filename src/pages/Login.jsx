@@ -1,51 +1,69 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import useAuth from '../context/AuthContext/useAuth';
 
+
+
 const Login = () => {
-    const [email, setEmail] = useState('Admin');
-    const [password, setPassword] = useState('1234');
+    const [userForm, setUserForm] = useState({
+        name: 'Admin',
+        password: '1234',
+    });
     const [error, setError] = useState('');
-    const { login } = useAuth();
+    const { login, user } = useAuth();
     const navigate = useNavigate();
 
+    if (user) { return <Navigate to="/admin" replace />; }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserForm({ ...userForm, [name]: value });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        const result = await login(email, password);
-        if (result.success) {
-            navigate('/');
+        const result = await login(userForm.name, userForm.password);
+        if (result) {
+            navigate('/admin');
         } else {
-            setError(result.message);
+            setError('Usuario o contraseña incorrectos');
+            alert('Usuario o contraseña incorrectos');
+            setUserForm({ name: '', password: '' });
         }
     };
 
+
+
     return (
         <div className="container mt-5">
+            <h2 className="text-center mb-4">Iniciar Sesión</h2>
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="card shadow">
                         <div className="card-body">
-                            <h2 className="text-center mb-4">Iniciar Sesión</h2>
                             {error && <div className="alert alert-danger">{error}</div>}
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label className="form-label">Usuario / Email</label>
+                                    <label htmlFor="name" className="form-label">Usuario / Email</label>
                                     <input
+                                        id="name"
+                                        name="name"
                                         type="text"
                                         className="form-control"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={userForm.name}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Contraseña</label>
+                                    <label htmlFor="password" className="form-label">Contraseña</label>
                                     <input
+                                        id="password"
+                                        name="password"
                                         type="password"
                                         className="form-control"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={userForm.password}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </div>

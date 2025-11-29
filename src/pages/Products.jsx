@@ -12,6 +12,9 @@ const Products = () => {
         getProducts().then(data => {
             setProducts(data);
             setLoading(false);
+        }).catch(error => {
+            console.error('Error al obtener los productos:', error);
+            setLoading(false);
         });
     }, []);
 
@@ -24,7 +27,7 @@ const Products = () => {
                 {products.map(product => (
                     <div key={product.id} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={product.image} className="card-img-top" alt={product.name} style={{ aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
+                            <img src={product.image || product.imageUrl} className="card-img-top" alt={product.name} style={{ aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
                             <div className="card-body">
                                 <h5 className="card-title">{product.name}</h5>
                                 <p className="card-text">${product.price}</p>

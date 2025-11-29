@@ -1,43 +1,54 @@
-import laptopImage from '../assets/laptop.png';
-import iphoneImage from '../assets/iphone.png';
-import headphonesImage from '../assets/headphones.png';
 
-// Mock data
-const PRODUCTS = [
-    { id: 1, name: 'Laptop Pro', price: 1200, category: 'Laptops', description: 'Laptop de alto rendimiento para profesionales.', image: laptopImage },
-    { id: 2, name: 'Iphone 14 pro max', price: 800, category: 'Teléfonos', description: 'El último smartphone con cámara avanzada.', image: iphoneImage },
-    { id: 3, name: 'Headphones Max', price: 200, category: 'Audio', description: 'Auriculares con cancelación de ruido.', image: headphonesImage },
-];
 
-export const getProducts = async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(PRODUCTS), 500);
+const BASE_URL = "https://69282d3fb35b4ffc50148800.mockapi.io";
+
+export const createProduct = async (product) => {
+    const response = await fetch(`${BASE_URL}/products`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
     });
+
+    if (!response.ok) {
+        throw new Error('Error al crear el producto');
+    }
+
+    const result = await response.json();
+
+    return result;
 };
+
+export const getProducts = async (category) => {
+    let url = `${BASE_URL}/products`;
+    if (category) {
+        url = `${BASE_URL}/products?category=${category}`;
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Error al obtener los productos');
+    }
+    return response.json();
+}
+
+export const deleteProduct = async (id) => {
+    const response = await fetch(`${BASE_URL}/products/${id}`, {
+        method: 'DELETE',
+    });
+    if (!response.ok) {
+        throw new Error('Error al eliminar el producto');
+    }
+    return response.json();
+}
 
 export const getProductById = async (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(PRODUCTS.find(p => p.id === parseInt(id))), 500);
-    });
-};
+    const response = await fetch(`${BASE_URL}/products/${id}`);
+    if (!response.ok) {
+        throw new Error('Error al obtener el producto');
+    }
+    return response.json();
+}
 
-export const uploadImage = async (file) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // In a real app, this would upload to Firebase/Cloudinary
-            // Here we just create a local URL
-            const url = URL.createObjectURL(file);
-            resolve(url);
-        }, 1000);
-    });
-};
 
-export const addProduct = async (product) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const newProduct = { ...product, id: Date.now() };
-            PRODUCTS.push(newProduct);
-            resolve(newProduct);
-        }, 500);
-    });
-};

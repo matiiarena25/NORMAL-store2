@@ -1,58 +1,27 @@
 import { useState, useEffect } from 'react';
-import { uploadImage, addProduct, getProducts } from '../services/productService';
+import { getProducts, deleteProduct } from '../services/productService';
+import { ProductFormContainer } from '../components/adminComponents/ProductFormContainer';
 
 const Admin = () => {
     const [products, setProducts] = useState([]);
-    const [newProduct, setNewProduct] = useState({
-        name: '',
-        price: '',
-        category: '',
-        description: '',
-        image: ''
-    });
-    const [imageFile, setImageFile] = useState(null);
-    const [preview, setPreview] = useState(null);
-    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         getProducts().then(setProducts);
     }, []);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImageFile(file);
-            setPreview(URL.createObjectURL(file));
-        }
+    const handleProductAdded = (newProduct) => {
+        setProducts([...products, newProduct]);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setUploading(true);
-
-        try {
-            let imageUrl = newProduct.image;
-            if (imageFile) {
-                imageUrl = await uploadImage(imageFile);
+    const handleDelete = async (id) => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            try {
+                await deleteProduct(id);
+                setProducts(products.filter(product => product.id !== id));
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Error al eliminar el producto');
             }
-
-            const productToAdd = {
-                ...newProduct,
-                price: parseFloat(newProduct.price),
-                image: imageUrl
-            };
-
-            const addedProduct = await addProduct(productToAdd);
-            setProducts([...products, addedProduct]);
-            setNewProduct({ name: '', price: '', category: '', description: '', image: '' });
-            setImageFile(null);
-            setPreview(null);
-            alert('Producto agregado exitosamente!');
-        } catch (error) {
-            console.error('Error adding product:', error);
-            alert('Error al agregar el producto');
-        } finally {
-            setUploading(false);
         }
     };
 
@@ -65,69 +34,7 @@ const Admin = () => {
                     <h4>Agregar Nuevo Producto</h4>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Nombre del Producto</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ej: Auriculares Bluetooth"
-                                value={newProduct.name}
-                                onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Precio</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Ej: 15000"
-                                value={newProduct.price}
-                                onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Categoría</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ej: Audio"
-                                value={newProduct.category}
-                                onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Descripción Corta</label>
-                            <textarea
-                                className="form-control"
-                                placeholder="Ej: Auriculares inalámbricos con cancelación de ruido..."
-                                value={newProduct.description}
-                                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Imagen del Producto</label>
-                            <input
-                                type="file"
-                                className="form-control"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                required
-                            />
-                        </div>
-                        {preview && (
-                            <div className="mb-3 text-center">
-                                <img src={preview} alt="Preview" className="img-thumbnail" style={{ maxHeight: '150px' }} />
-                            </div>
-                        )}
-                        <button type="submit" className="btn btn-success w-100" disabled={uploading}>
-                            {uploading ? 'Subiendo...' : 'Agregar Producto'}
-                        </button>
-                    </form>
+                    <ProductFormContainer onProductAdded={handleProductAdded} />
                 </div>
             </div>
 
@@ -146,13 +53,13 @@ const Admin = () => {
                     {products.map(product => (
                         <tr key={product.id}>
                             <td>
-                                <img src={product.image} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                                <img src={product.image || product.imageUrl} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
                             </td>
                             <td>{product.name}</td>
                             <td>${product.price}</td>
                             <td>{product.category}</td>
                             <td>
-                                <button className="btn btn-danger btn-sm">Eliminar</button>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(product.id)}>Eliminar</button>
                             </td>
                         </tr>
                     ))}

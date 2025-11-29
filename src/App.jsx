@@ -5,7 +5,6 @@ import ThemeProvider from './context/ThemeContext/ThemeProvider';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Notification from './components/Notification';
-import SecretMessage from './components/SecretMessage';
 import ThemeBackground from './components/ThemeBackground';
 import ProtectedRoute from './routes/ProtectedRoute';
 import useTheme from './context/ThemeContext/useTheme';
@@ -17,6 +16,9 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
+import { ProductFormContainer } from './components/adminComponents/ProductFormContainer';
+import { Mainlayout } from './Layouts/Mainlayout';
+import { adminlayout as AdminLayout } from './Layouts/Adminlayout';
 
 function AppContent() {
   const { isDarkMode } = useTheme();
@@ -26,20 +28,22 @@ function AppContent() {
         <Navbar />
         <main className="flex-grow-1">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
+            <Route element={<Mainlayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
             </Route>
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-              <Route path="/admin" element={<Admin />} />
+              <Route element={<AdminLayout />}>
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/productformcontainer" element={<ProductFormContainer />} />
+              </Route>
             </Route>
           </Routes>
         </main>
         <Notification />
-        <SecretMessage />
         <Footer />
         <ThemeBackground />
       </div>
